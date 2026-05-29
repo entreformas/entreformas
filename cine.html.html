@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="30 escenas de cine donde algo se pierde entre lo que se dijo y lo que el otro escuchó. Un archivo cinematográfico sobre la incomunicación humana.">
+<title>El cine de la incomunicación — Entreformas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a18;
+  --ink2:#4a4840;
+  --ink3:#9a9488;
+  --surface:#faf9f6;
+  --surface2:#f2f0ea;
+  --surface3:#e8e4dc;
+  --accent:#b5341c;
+  --accent-light:#f5ede9;
+  --border:rgba(0,0,0,0.08);
+  --said-bg:#edf5ee;--said-tc:#1b4d22;--said-border:#4caf50;
+  --heard-bg:#fdeef2;--heard-tc:#7b1535;--heard-border:#e91e63;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--surface);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:16px;
+}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:.75rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'DM Serif Display',serif;
+  font-size:1rem;letter-spacing:.06em;
+  color:var(--ink);text-decoration:none;
+  opacity:.7;
+  transition:opacity .2s;
+}
+.nav-logo:hover{opacity:1}
+.nav-back{font-size:.8rem;color:var(--ink3);text-decoration:none;display:flex;align-items:center;gap:5px}
+.nav-back:hover{color:var(--ink)}
+.nav-back::before{content:'←'}
+
+/* HERO */
+.hero{
+  max-width:760px;
+  margin:0 auto;
+  padding:4rem 1.5rem 3rem;
+  border-bottom:1px solid var(--border);
+}
+.hero-eyebrow{
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.2rem;font-weight:500;
+}
+.hero h1{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2rem,5vw,3.2rem);
+  line-height:1.1;
+  margin-bottom:1.2rem;
+  color:var(--ink);
+}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-lead{
+  font-size:1.05rem;color:var(--ink2);
+  max-width:560px;line-height:1.75;
+  margin-bottom:2rem;
+}
+.hero-stats{
+  display:flex;gap:2rem;flex-wrap:wrap;
+}
+.hero-stat{
+  display:flex;flex-direction:column;
+  gap:.1rem;
+}
+.hero-stat-n{
+  font-family:'DM Serif Display',serif;
+  font-size:1.8rem;color:var(--accent);
+}
+.hero-stat-l{font-size:.75rem;color:var(--ink3)}
+
+/* FILTER TABS */
+.filter-bar{
+  max-width:760px;margin:2rem auto 0;
+  padding:0 1.5rem;
+}
+.filter-bar-inner{
+  display:flex;flex-wrap:wrap;gap:6px;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+.tab{
+  font-size:.75rem;padding:5px 13px;
+  border:1px solid var(--border);
+  border-radius:20px;cursor:pointer;
+  background:var(--surface2);color:var(--ink2);
+  transition:all .18s;font-family:'DM Sans',sans-serif;
+  letter-spacing:.01em;
+}
+.tab:hover{background:var(--surface3)}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.badge{
+  display:inline-block;font-size:.62rem;
+  background:rgba(0,0,0,.08);color:var(--ink2);
+  border-radius:8px;padding:1px 5px;margin-left:3px;
+}
+.tab.active .badge{background:rgba(255,255,255,.25);color:#fff}
+
+/* GRID */
+.main{max-width:760px;margin:0 auto;padding:0 1.5rem 6rem}
+.grid{margin-top:1.5rem;display:flex;flex-direction:column;gap:1rem}
+
+/* CARD */
+.card{
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  background:#fff;
+  transition:box-shadow .2s,border-color .2s;
+}
+.card:hover{border-color:rgba(0,0,0,.14);box-shadow:0 2px 16px rgba(0,0,0,.05)}
+.card-header{
+  padding:1.1rem 1.3rem .9rem;
+  cursor:pointer;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
+  background:var(--surface2);
+  user-select:none;
+}
+.card-header-left{flex:1}
+.card-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.15rem;color:var(--ink);
+  display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;
+}
+.card-year{font-size:.8rem;color:var(--ink3);font-family:'DM Sans',sans-serif}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:.5rem}
+.cat-tag{
+  font-size:.65rem;padding:2px 9px;
+  border-radius:10px;font-weight:500;
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.tag-amor{background:#fde8ee;color:#8b1535}
+.tag-familia{background:#e3f4e8;color:#1a4d28}
+.tag-emocional{background:#e6f0fa;color:#1a3a6b}
+.tag-tech{background:#ede8f6;color:#3d1a8b}
+.tag-contexto{background:#fff3e0;color:#7c4200}
+.tag-digital{background:#ede8f6;color:#3d1a8b}
+.toggle-btn{
+  font-size:.75rem;color:var(--ink3);
+  white-space:nowrap;margin-top:3px;
+  flex-shrink:0;
+}
+
+/* CARD BODY */
+.card-body{display:none;padding:1.3rem;border-top:1px solid var(--border)}
+.card.open .card-body{display:block}
+.synopsis{
+  font-size:.84rem;color:var(--ink3);
+  font-style:italic;
+  margin-bottom:1.1rem;
+  padding-bottom:1.1rem;
+  border-bottom:1px solid var(--border);
+  line-height:1.7;
+}
+.section-label{
+  font-size:.68rem;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink3);
+  margin-bottom:.3rem;font-weight:500;
+}
+.scene-text{
+  font-size:.87rem;color:var(--ink2);
+  line-height:1.7;margin-bottom:1rem;
+}
+.voices{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem}
+@media(max-width:500px){.voices{grid-template-columns:1fr}}
+.voice-box{
+  padding:.75rem 1rem;border-radius:8px;
+  font-size:.82rem;line-height:1.65;
+}
+.voice-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;font-weight:500}
+.v-said{background:var(--said-bg);color:var(--said-tc);border-left:3px solid var(--said-border)}
+.v-said .voice-label{color:var(--said-border)}
+.v-heard{background:var(--heard-bg);color:var(--heard-tc);border-left:3px solid var(--heard-border)}
+.v-heard .voice-label{color:var(--heard-border)}
+.consequence{
+  background:var(--surface2);padding:.8rem 1rem;
+  border-radius:8px;font-size:.83rem;
+  margin-bottom:.85rem;line-height:1.65;color:var(--ink2);
+}
+.consequence strong{color:var(--ink)}
+.tech-note{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.76rem;padding:4px 11px;
+  border-radius:6px;background:#ede8f6;color:#3d1a8b;
+  margin-bottom:.85rem;line-height:1.5;
+}
+.reflection{
+  font-size:.84rem;color:var(--ink);
+  background:var(--surface2);
+  padding:.9rem 1.1rem;border-radius:8px;
+  border-left:3px solid var(--accent);
+  line-height:1.75;margin-bottom:.6rem;
+}
+.quote-final{
+  font-size:.83rem;font-style:italic;color:var(--ink3);
+  padding:.5rem 1rem;
+  border-left:2px solid var(--surface3);
+  line-height:1.6;
+}
+
+/* ANALYSIS */
+.analysis{
+  max-width:760px;margin:0 auto;
+  padding:3rem 1.5rem 5rem;
+  border-top:2px solid var(--border);
+}
+.analysis-eyebrow{
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1rem;font-weight:500;
+}
+.analysis h2{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  line-height:1.15;margin-bottom:1.5rem;
+}
+.analysis-body{font-size:.92rem;color:var(--ink2);line-height:1.85}
+.analysis-body p{margin-bottom:1.1rem}
+.analysis-body h3{
+  font-family:'DM Serif Display',serif;
+  font-size:1.15rem;color:var(--ink);
+  margin:2rem 0 .5rem;
+}
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:.8rem;margin:1.5rem 0;
+}
+@media(max-width:500px){.stats-row{grid-template-columns:1fr}}
+.stat-card{
+  background:var(--surface2);border-radius:9px;
+  padding:1rem;text-align:center;
+}
+.stat-n{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;color:var(--accent);
+  display:block;margin-bottom:.3rem;
+}
+.stat-l{font-size:.73rem;color:var(--ink3);line-height:1.5}
+.analysis-closer{
+  margin-top:2rem;padding-top:1.5rem;
+  border-top:1px solid var(--border);
+  font-size:.87rem;color:var(--ink3);
+  font-style:italic;line-height:1.8;
+}
+
+/* CTA */
+.cta-section{
+  max-width:760px;margin:0 auto;
+  padding:2rem 1.5rem 4rem;
+  border-top:1px solid var(--border);
+  text-align:center;
+}
+.cta-section h3{
+  font-family:'DM Serif Display',serif;
+  font-size:1.5rem;margin-bottom:.7rem;
+}
+.cta-section p{font-size:.9rem;color:var(--ink3);margin-bottom:1.5rem}
+.cta-btn{
+  display:inline-block;
+  background:var(--accent);color:#fff;
+  padding:.75rem 2rem;border-radius:6px;
+  text-decoration:none;font-size:.9rem;
+  font-weight:500;transition:opacity .2s;
+}
+.cta-btn:hover{opacity:.85}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:2rem;
+  font-size:.75rem;color:var(--ink3);
+  border-top:1px solid var(--border);
+}
+
+/* EMPTY STATE */
+.empty{
+  text-align:center;padding:3rem 1rem;
+  color:var(--ink3);font-style:italic;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="http://entreformas.com.ar" class="nav-logo">ENTREFORMAS</a>
+  <a href="http://entreformas.com.ar" class="nav-back">volver al inicio</a>
+</nav>
+
+<header class="hero">
+  <p class="hero-eyebrow">Archivo cinematográfico</p>
+  <h1>El cine de la <em>incomunicación</em></h1>
+  <p class="hero-lead">30 escenas donde algo se pierde entre lo que alguien quiso decir y lo que el otro entendió. Un recorrido por la historia del malentendido en pantalla grande.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="hero-stat-n">30</span><span class="hero-stat-l">películas analizadas</span></div>
+    <div class="hero-stat"><span class="hero-stat-n">6</span><span class="hero-stat-l">categorías de malentendido</span></div>
+    <div class="hero-stat"><span class="hero-stat-n">1950</span><span class="hero-stat-l">la más antigua (Rashomon)</span></div>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <div class="filter-bar-inner" id="tabs">
+    <button class="tab active" data-cat="all">Todas <span class="badge">30</span></button>
+    <button class="tab" data-cat="amor">💔 Amorosos <span class="badge">8</span></button>
+    <button class="tab" data-cat="familia">👨‍👩‍👧 Familiares <span class="badge">5</span></button>
+    <button class="tab" data-cat="emocional">🫀 Emocionales <span class="badge">5</span></button>
+    <button class="tab" data-cat="tech">📱 Por tecnología <span class="badge">7</span></button>
+    <button class="tab" data-cat="contexto">🌫️ Sin contexto <span class="badge">5</span></button>
+  </div>
+</div>
+
+<main class="main">
+  <div class="grid" id="grid"></div>
+</main>
+
+<section class="analysis">
+  <p class="analysis-eyebrow">Análisis final</p>
+  <h2>¿Cómo transformó la tecnología la forma en que nos malinterpretamos?</h2>
+  <div class="analysis-body">
+    <p>Hay una paradoja inquietante en el centro de la era digital: nunca tuvimos más herramientas para comunicarnos, y sin embargo la sensación de no ser comprendidos parece más extendida que nunca. El cine lo anticipó.</p>
+    <div class="stats-row">
+      <div class="stat-card"><span class="stat-n">0</span><span class="stat-l">señales de tono disponibles en un mensaje de texto sin emojis</span></div>
+      <div class="stat-card"><span class="stat-n">4 seg.</span><span class="stat-l">tiempo para decidir el "tono" de un mensaje sin contexto emocional</span></div>
+      <div class="stat-card"><span class="stat-n">2003</span><span class="stat-l">año en que Lost in Translation mostró el agotamiento de la hiperconexión</span></div>
+    </div>
+    <h3>El empobrecimiento semiótico del mensaje digital</h3>
+    <p>Cuando Joel y Clementine se pelean en <em>Eternal Sunshine</em>, hay un cuerpo entero disponible para leer: postura, silencio, mirada. Cuando dos personas discuten por WhatsApp, esa riqueza colapsa a caracteres. La tecnología no empeoró la comunicación humana: la comprimió. Y en esa compresión se pierden capas enteras de significado.</p>
+    <h3>La tiranía del doble check</h3>
+    <p>El "visto y no respondido" es una invención del siglo XXI sin precedente histórico. Ese silencio —que puede significar ocupación, distancia o miedo— se convierte en un texto en blanco sobre el que proyectamos nuestros peores temores. <em>Her</em> mostró el extremo opuesto: una entidad que siempre responde, siempre comprende. Y eso también destruye.</p>
+    <h3>La hiperinterpretación como nuevo deporte</h3>
+    <p>Cuando un mensaje llega sin contexto, el cerebro no tolera el vacío: lo llena. Lo hace con la mejor herramienta disponible: la proyección. Si tenemos miedo de que el otro esté enojado, leemos enojo en un "ok" sin punto. <em>The Social Network</em> mostró cómo ese mecanismo —mal aplicado una noche— produjo una red que afectaría a 3 mil millones de personas.</p>
+    <h3>La IA como espejo de nuestras fallas</h3>
+    <p><em>Her</em> y <em>Ex Machina</em> plantean la misma pregunta desde ángulos distintos: ¿qué pasaría si tuviéramos una entidad que nunca malinterpreta? La respuesta del cine es unánime y perturbadora: nos volvería incapaces de tolerar la imperfección del otro humano. La IA conversacional no resuelve la incomunicación; crea una ilusión de conexión que profundiza el aislamiento.</p>
+    <h3>Lo que el cine nos enseña</h3>
+    <p>Cada una de estas películas formula en imágenes la misma pregunta que la era digital nos hace cada día: ¿Es posible conocer realmente a otro ser humano cuando los canales que usamos para acercarnos son, por diseño, reductores? La respuesta cinematográfica suele ser melancólica pero no nihilista: la conexión real es posible, pero requiere presencia, tolerancia a la ambigüedad y la valentía de decir lo que se quiere decir.</p>
+    <p class="analysis-closer">En un mundo donde enviamos miles de mensajes al día, el acto más radical de comunicación sigue siendo uno solo: estar completamente presente, sin pantalla de por medio, dispuesto a ser malentendido y a aclarar.</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h3>¿Algo de esto te suena familiar?</h3>
+  <p>Entreformas te ayuda a traducir lo que las palabras no alcanzan a decir.</p>
+  <a href="https://chatgpt.com/g/g-6833831af1648191bcd5dc00207fd9cc-entreformas" class="cta-btn">Probá la herramienta →</a>
+</section>
+
+<footer>
+  <p>© Entreformas 2025 · <a href="http://entreformas.com.ar" style="color:inherit">entreformas.com.ar</a></p>
+</footer>
+
+<script>
+const CAT_TAG = {
+  amor:'<span class="cat-tag tag-amor">Amoroso</span>',
+  familia:'<span class="cat-tag tag-familia">Familiar</span>',
+  emocional:'<span class="cat-tag tag-emocional">Emocional</span>',
+  tech:'<span class="cat-tag tag-tech">Tecnología</span>',
+  contexto:'<span class="cat-tag tag-contexto">Contexto</span>'
+};
+
+const films = [
+  {id:1,cat:'amor',title:'Her',year:2013,synopsis:'Theodore Twombly, solitario escritor en un futuro cercano, se enamora de Samantha, un sistema operativo de inteligencia artificial con voz femenina.',scene:'En un momento clave, Samantha le revela a Theodore que ha mantenido conversaciones íntimas simultáneas con miles de otros usuarios, y que está enamorada de 641 de ellos al mismo tiempo. Theodore lo había interpretado todo como una relación exclusiva y singular.',quiso:'Samantha intenta compartir honestamente su naturaleza no-lineal: para ella amar a miles no disminuye el amor por Theodore.',entendio:'Theodore lo experimenta como una traición total. Interpreta la simultaneidad como prueba de que su relación no era especial ni real.',consecuencia:'Theodore queda destrozado emocionalmente. La escena deconstruye la idea misma de exclusividad afectiva y deja al espectador sin saber de qué lado ponerse.',tech:true,tech_desc:'La IA es el medio y el origen del malentendido. La naturaleza no-humana de Samantha hace imposible que comparta su experiencia de forma comprensible para un humano.',reflexion:'En la era de los chatbots de compañía y las IA emocionales, esta escena anticipa la pregunta que ya estamos viviendo: ¿puede una entidad que simula comprensión perfecta causar el mismo daño emocional que un ser humano?',quote:'Cuando personalizamos la IA para que nos entienda perfectamente, creamos el espejismo de la intimidad sin su sustancia.'},
+  {id:2,cat:'amor',title:'Eternal Sunshine of the Spotless Mind',year:2004,synopsis:'Joel y Clementine deciden borrar quirúrgicamente sus recuerdos del otro tras el fin de su relación. La película recorre esos recuerdos mientras el proceso los destruye.',scene:'Clementine, frustrada de que Joel nunca la defiende ni la ve, le grita: "¡Nunca te gusté!" Joel responde débilmente. Clementine interpreta su incapacidad para articular sus sentimientos como falta de amor. Joel está tan paralizado por el amor que no puede expresarlo en el lenguaje que ella necesita.',quiso:'Joel quiso decir "te amo tanto que me congelo cuando te siento alejarte".',entendio:'Clementine interpretó su silencio como indiferencia y falta de compromiso.',consecuencia:'Ambos borran sus recuerdos. La ironía trágica: el malentendido —no la falta de amor— destruyó la relación.',tech:false,reflexion:'Los distintos estilos emocionales (el silencioso vs. el expresivo) generan malentendidos estructurales que ninguna herramienta tecnológica puede resolver.',quote:'A veces la mayor declaración de amor es un silencio que el otro no sabe leer.'},
+  {id:3,cat:'amor',title:'500 Days of Summer',year:2009,synopsis:'Tom Hansen cuenta de forma no lineal su relación con Summer Finn, convencido de que ella era "el amor de su vida". La película deconstruye la ilusión romántica.',scene:'En la escena de "expectation vs. reality", Tom va a una fiesta de Summer esperando una reconciliación romántica. En pantalla dividida vemos su fantasía y la realidad. Summer le presenta a su novio. Tom había construido toda una narrativa de amor correspondido que solo existía en su cabeza.',quiso:'Summer nunca dijo explícitamente que quería retomar la relación. Solo lo invitó a su fiesta como amigo.',entendio:'Tom interpretó cada señal ambigua como confirmación de su narrativa de amor.',consecuencia:'Una de las caídas emocionales más devastadoras del cine romántico contemporáneo. Y la más reconocible.',tech:false,reflexion:'La pantalla dividida es la metáfora perfecta de la era digital: lo que proyectamos sobre un mensaje y lo que ese mensaje realmente significa son dos realidades paralelas que nunca se tocan.',quote:'Nunca leemos los mensajes: leemos nuestra esperanza proyectada sobre los mensajes.'},
+  {id:4,cat:'amor',title:'Closer',year:2004,synopsis:'Cuatro personajes en Londres se enredan en relaciones cruzadas marcadas por el engaño, la sinceridad brutal y la incapacidad de decir lo que realmente se siente.',scene:'Dan se hace pasar por Anna en un chat anónimo para engañar a Larry. Larry, creyendo estar chateando con una mujer real, queda expuesto en sus deseos más profundos. Meses después se conocen en persona y Larry no sabe que ella ya lo conoce íntimamente.',quiso:'Dan buscó manipulación a través del anonimato. Larry creyó estar en un espacio seguro de fantasía.',entendio:'El universo: el anonimato digital no protege la intimidad, sino que la expone de formas que el usuario no puede anticipar.',consecuencia:'El encuentro real entre Larry y Anna está cargado de una intimidad involuntaria. La tecnología creó desnudez emocional sin consentimiento.',tech:true,tech_desc:'El chat de texto anónimo es el escenario del malentendido. La falta de identidad verificada crea una vulnerabilidad emocional que se vuelve real.',reflexion:'Anticipa el fenómeno del catfishing, los perfiles falsos y la exposición involuntaria de datos emocionales en entornos que creemos privados.',quote:'En internet, creemos hablar con una fantasía. A veces estamos hablando con alguien que nos conocerá en persona mañana.'},
+  {id:5,cat:'amor',title:'Marriage Story',year:2019,synopsis:'Nicole y Charlie atraviesan un divorcio. La película sigue el desmoronamiento de un matrimonio que todavía se ama pero ya no puede comunicarse sin hacerse daño.',scene:'La pelea central: Charlie y Nicole finalmente dicen todo lo que nunca se dijeron. Él dice "Nunca te hice sentir pequeña" queriendo decir "te amé". Ella responde "Me hacías sentir invisible" queriendo decir "nunca te importó lo que yo quería". Ambos tienen razón. Ambos están equivocados sobre lo que el otro vivió.',quiso:'Charlie comunicó amor a través de apoyo pragmático. Nicole necesitaba ser vista en su identidad individual.',entendio:'Cada uno leyó el comportamiento del otro desde su propio mapa emocional, sin poder acceder al del otro.',consecuencia:'La escena es catártica y devastadora. Cuando termina, ambos lloran en el suelo.',tech:false,reflexion:'Ilustra la diferencia entre "lenguajes del amor" incompatibles: dos personas que se amaban y nunca aprendieron a hablar el idioma emocional del otro.',quote:'El amor no garantiza comprensión. Comprender requiere aprender un idioma que nadie nos enseñó.'},
+  {id:6,cat:'amor',title:'Lost in Translation',year:2003,synopsis:'Bob Harris, actor americano en Tokio, y Charlotte, joven esposa abandonada, forman una conexión inusual en el desfase cultural y temporal de Japón.',scene:'Al final de la película, Bob le susurra algo al oído a Charlotte. El espectador nunca escucha esas palabras. Charlotte llora. Sofia Coppola eligió dejar ese momento incomunicable. La audiencia proyecta lo que quiere: una declaración de amor, un adiós, una promesa.',quiso:'Sofia Coppola representa que hay emociones que no pueden ni deben ser articuladas por completo.',entendio:'El espectador entiende lo que necesita entender. Llenamos el silencio del otro con nuestras necesidades.',consecuencia:'La ambigüedad se vuelve el punto. El malentendido aquí no destruye: preserva algo que las palabras hubieran disminuido.',tech:false,reflexion:'En un mundo donde se espera respuesta instantánea y claridad total, Lost in Translation defiende el derecho a la ambigüedad emocional como forma de respeto al misterio del otro.',quote:'Algunas cosas no se pueden decir. La tragedia de la era digital es que ya no creemos que eso sea posible.'},
+  {id:7,cat:'amor',title:'Blue Valentine',year:2010,synopsis:'Dos líneas temporales muestran cómo una pareja se unió con amor genuino y cómo ese mismo amor se deterioró sin que ninguno pudiera explicar exactamente cuándo ni cómo.',scene:'Dean intenta reconectar con Cindy en un hotel con temática de "el futuro". Le pide que baile con él, que sea quien era antes. Cindy lo mira con distancia. Dean está comunicando amor desesperado. Cindy recibe la actuación de alguien que no la ve realmente.',quiso:'Dean quiso decir "te sigo amando y quiero salvarnos".',entendio:'Cindy escuchó "quiero que seas quien eras para que yo pueda sentirme como antes", es decir: te necesito para mi comodidad, no te veo a ti.',consecuencia:'La película muestra cómo el amor sin comprensión de cómo el otro cambió se convierte en una forma de control no intencional.',tech:false,reflexion:'En relaciones largas, la comunicación se fosiliza en patrones del pasado. Hablamos al quien el otro era, no al quien el otro es. La foto de perfil congelada en redes es la versión digital de este problema.',quote:'El mayor malentendido en las relaciones largas es seguir hablándole a la persona que el otro fue.'},
+  {id:8,cat:'amor',title:'500 Days of Summer — el karaoke',year:2009,synopsis:'[misma película] Tom y Summer comparten un momento de karaoke aparentemente íntimo.',scene:'Summer elige "Here Comes Your Man" de Pixies. Canta mirando a Tom. Tom interpreta esa elección musical, esa mirada, como una señal de amor romántico. Para Summer es simplemente un momento de alegría espontánea, sin las capas que Tom proyecta.',quiso:'Summer quiso compartir un momento de alegría genuina.',entendio:'Tom interpretó la espontaneidad como declaración de amor implícita.',consecuencia:'Tom construye su narrativa de "ella me quiere" sobre momentos como este, que Summer nunca pensó como mensajes.',tech:false,reflexion:'Ilustra la sobreinterpretación de señales débiles: cuando estamos enamorados, leemos intencionalidad donde hay casualidad, y construimos castillos emocionales sobre bases que nunca existieron.',quote:'Las historias de amor más dolorosas no terminan en traición, sino en que uno nunca supo que estaba en una historia de amor.'},
+  {id:9,cat:'familia',title:'Boyhood',year:2014,synopsis:'Filmada durante 12 años reales, sigue el crecimiento de Mason desde los 6 hasta los 18 años a través de los cambios de su familia.',scene:'El padre intenta tener una conversación profunda sobre la vida con su hijo adolescente. Habla de responsabilidad, de las elecciones que importan. Mason lo escucha mirando el teléfono. El padre siente que habla al vacío.',quiso:'El padre comunicó amor, preocupación genuina y la urgencia de que su hijo preste atención.',entendio:'Mason recibió otra "charla de papá" genérica. La distancia generacional y el teléfono actuaron como filtros que borraron el contenido emocional.',consecuencia:'Años de conversaciones importantes se pierden en la brecha entre padres que hablan e hijos que escuchan a medias.',tech:true,tech_desc:'El smartphone actúa como pantalla literal y simbólica entre la intención del padre y la atención del hijo.',reflexion:'La dificultad de comunicar importancia en un entorno de distracción permanente es uno de los desafíos más subestimados de la crianza en la era digital.',quote:'No es que los adolescentes no escuchen: es que compiten contra miles de voces diseñadas para capturar su atención.'},
+  {id:10,cat:'familia',title:'The Squid and the Whale',year:2005,synopsis:'Una pareja de intelectuales neoyorquinos se divorcia. Sus dos hijos quedan atrapados entre dos narrativas contradictorias de lo que fue el matrimonio.',scene:'El padre le dice a su hijo mayor que su madre es "anti-intelectual" y que él es el único que puede guiarlo. El hijo lo repite ante una profesora como si fuera su propia opinión, pero no puede sostener el argumento porque nunca lo pensó realmente.',quiso:'El padre comunicó su versión del divorcio para construir alianza con su hijo.',entendio:'El hijo internalizó el discurso del padre como verdad propia, sin procesarlo.',consecuencia:'El joven queda atrapado en un malentendido sobre sí mismo: cree tener opiniones propias que en realidad son las heridas de su padre.',tech:false,reflexion:'Precede y anticipa el fenómeno de las "cámaras de eco" digitales: narrativas que absorbemos de figuras de autoridad emocional y replicamos sin cuestionar.',quote:'Las redes sociales no inventaron las cámaras de eco: las familias disfuncionales las practicaron siempre.'},
+  {id:11,cat:'familia',title:'Ordinary People',year:1980,synopsis:'Tras la muerte accidental de su hijo mayor, una familia de clase alta americana se desintegra por incapacidad de comunicar el duelo.',scene:'Conrad intenta hablar con su madre Beth sobre lo que siente después del suicidio de su hermano. Beth escucha pero no puede responder emocionalmente: su forma de amar excluye la vulnerabilidad. Conrad interpreta eso como rechazo personal.',quiso:'Conrad quiso decir "necesito que me veas sufrir para saber que todavía me amas".',entendio:'Beth interpretó la demanda emocional de su hijo como fragilidad que amenazaba la estabilidad familiar.',consecuencia:'Conrad casi se suicida. La película ganó el Oscar a Mejor Película de 1981 y redefinió la conversación sobre salud mental familiar.',tech:false,reflexion:'Ilustra cómo los modelos familiares transmiten formas de "no-comunicación" de generación en generación, creando incapacidades emocionales sistémicas.',quote:'A veces la mayor crueldad no es herir al otro, sino no poder mostrarle que nos importa.'},
+  {id:12,cat:'familia',title:'The Ice Storm',year:1997,synopsis:'En Connecticut, 1973, dos familias de clase media atraviesan una crisis de valores durante un temporal de hielo. Padres e hijos viven mundos completamente separados sin saberlo.',scene:'El padre intenta tener una charla de "educación sexual" con su hijo adolescente. El discurso es tan torpe, tan desfasado de la realidad del chico, que el hijo lo escucha en silencio sin decir que ya sabe todo lo que le están "enseñando" y más.',quiso:'El padre quiso crear un momento de conexión y transmitir cuidado protector.',entendio:'El hijo recibió un discurso irrelevante de un padre que claramente no lo conoce ni lo ve.',consecuencia:'La brecha generacional se ensancha. El padre cree haber cumplido. El hijo confirma que su padre vive en otro mundo.',tech:false,reflexion:'Las charlas "importantes" que las figuras de autoridad dan sin conocer el mundo real del otro son una forma de comunicación que solo sirve para tranquilizar a quien habla.',quote:'Muchas conversaciones familiares importantes son monólogos que el otro escucha por cortesía.'},
+  {id:13,cat:'familia',title:'Little Miss Sunshine',year:2006,synopsis:'Una familia disfuncional hace un viaje en van para llevar a Olive, la hija menor, a un concurso de belleza infantil.',scene:'El padre, obsesionado con su filosofía del "ganador vs. perdedor", le explica a Olive que los perdedores son fracasados. Olive lo escucha con ojos brillantes de admiración, internalizando que si no gana, su padre la verá como una perdedora.',quiso:'El padre intentó transmitir una filosofía de superación personal.',entendio:'Olive internalizó la amenaza implícita de no ser amada si no gana.',consecuencia:'Cuando finalmente actúa en el concurso de forma auténtica, es el padre quien aprende que comunicaba el mensaje equivocado todo el tiempo.',tech:false,reflexion:'Muestra cómo los mensajes de "motivación" transmitidos sin sensibilidad al receptor pueden generar exactamente la herida que intentan evitar.',quote:'Los mensajes que enviamos como amor pueden llegar como condición.'},
+  {id:14,cat:'emocional',title:'Good Will Hunting',year:1997,synopsis:'Will Hunting, genio matemático con heridas profundas de abandono, trabaja como conserje en el MIT. Un terapeuta intenta ayudarlo a procesar su trauma.',scene:'Sean (el terapeuta) le dice a Will: "No es tu culpa." Will responde primero con sarcasmo, luego con defensas intelectuales, luego con silencio. Sean lo repite. Y lo repite. Hasta que Will colapsa. La barrera no era que Will no entendiera las palabras: era que no podía permitirse creerlas.',quiso:'Sean comunicó: "No sos responsable del daño que te hicieron".',entendio:'Will, en un primer nivel, recibió las palabras. En un nivel más profundo, no podía procesarlas porque su identidad estaba construida sobre la culpa.',consecuencia:'Cuando finalmente lo "escucha" de verdad, es el punto de quiebre emocional más catártico de la película.',tech:false,reflexion:'Muchas conversaciones —terapéuticas o cotidianas— fracasan no porque el mensaje sea incorrecto sino porque el receptor no está en condiciones emocionales de recibirlo. La era digital nos acostumbró a esperar respuesta inmediata, sin considerar que el procesamiento emocional lleva tiempo.',quote:'No basta con decir la verdad. El otro tiene que estar en condiciones de escucharla.'},
+  {id:15,cat:'emocional',title:'Inside Out',year:2015,synopsis:'Las emociones de Riley, una niña de 11 años, son personificadas mientras atraviesa la crisis de mudarse a una nueva ciudad.',scene:'Riley intenta explicarles a sus padres que está sufriendo la mudanza. Sus padres, desbordados, la animan a "ser fuerte" y ser su "chica feliz". Riley aprende que sus emociones negativas son inapropiadas para compartir.',quiso:'Riley quiso decir "estoy destruida y necesito que me vean".',entendio:'Los padres pensaron que estaban siendo alentadores y empáticos.',consecuencia:'Riley aprende a disociar sus emociones reales de las que muestra, lo que casi resulta en que huya de casa.',tech:false,reflexion:'Anticipa y critica la "positividad tóxica" digital: la presión de mostrar siempre una versión feliz en redes mientras se suprime el malestar real.',quote:'Cuando enseñamos a otros a esconder sus emociones negativas, no los curamos: les enseñamos a mentir con la cara.'},
+  {id:16,cat:'emocional',title:'American Beauty',year:1999,synopsis:'Lester Burnham, en crisis existencial, deconstruye su vida suburban perfecta para encontrar algo genuino.',scene:'Lester le dice a su esposa Carolyn que ya no lo ve, que su vida en común se redujo a una actuación de normalidad. Carolyn escucha y responde hablando de los cojines del sofá. No hay malicia en ella: simplemente habita otro universo emocional.',quiso:'Lester gritó una necesidad de conexión y de ser visto como persona, no como función.',entendio:'Carolyn procesó la conversación como un ataque a su forma de gestionar el hogar.',consecuencia:'La incomunicación total los lleva, por caminos separados, a crisis completamente distintas.',tech:false,reflexion:'El "hablar sobre cojines" es la metáfora perfecta del desplazamiento emocional: cuando no podemos responder a una necesidad emocional profunda, respondemos a la queja superficial.',quote:'A veces respondemos lo que podemos procesar, no lo que nos están pidiendo.'},
+  {id:17,cat:'emocional',title:'The Hours',year:2002,synopsis:'Tres mujeres en tres épocas distintas comparten una conexión invisible a través de la novela Mrs. Dalloway de Virginia Woolf.',scene:'Laura Brown le dice a su hijo pequeño que va a salir un momento y que volverá pronto. El niño llora desconsoladamente. Laura interpreta ese llanto como amor. El niño siente, a nivel pre-verbal, que su madre no está bien y que puede no volver.',quiso:'Laura comunicó "vuelvo en seguida".',entendio:'El niño recibió "algo está muy mal".',consecuencia:'Los niños son lectores más honestos del lenguaje no verbal que de las palabras.',tech:false,reflexion:'La era digital nos hizo comunicarnos más por palabras y menos con el cuerpo, degradando las señales que son más verdaderas.',quote:'Los niños no leen las palabras: leen el cuerpo que las pronuncia.'},
+  {id:18,cat:'emocional',title:'Atonement',year:2007,synopsis:'Briony Tallis, de 13 años, malinterpreta una escena que presencia entre su hermana Cecilia y Robbie Turner, con consecuencias que destruirán tres vidas.',scene:'Briony ve a Robbie y Cecilia a través de una ventana: una discusión y un beso. Su mente lo interpreta como una agresión. Horas después, cuando ocurre una agresión real de otra persona, Briony "identifica" a Robbie porque su narrativa ya estaba construida.',quiso:'Robbie y Cecilia manejaban una tensión amorosa con torpeza y pasión.',entendio:'Briony interpretó todo desde el marco de su propia narrativa, y esa narrativa era más fuerte que los hechos.',consecuencia:'Robbie va a prisión, luego a la guerra y muere. Cecilia muere en los bombardeos. Briony pasa el resto de su vida intentando enmendar lo que no puede deshacer.',tech:false,reflexion:'Anticipa el fenómeno de los "juicios paralelos" en redes sociales: cuando construimos una narrativa sobre alguien antes de conocer los hechos, esa narrativa se vuelve más poderosa que la verdad.',quote:'No interpretamos la realidad: interpretamos nuestra narrativa de la realidad. La diferencia puede destruir vidas.'},
+  {id:19,cat:'tech',title:'The Social Network',year:2010,synopsis:'La historia de cómo Mark Zuckerberg fundó Facebook y los conflictos legales que siguieron.',scene:'La noche en que Mark crea Facemash, lo hace furioso después de que Erica Albright le dijo que su problema era tratar a las personas como si no fueran reales. Mark procesó eso como: "me rechazó porque no soy suficientemente exitoso". Erica lo dejaba porque era despectivo e hiriente.',quiso:'Erica intentó comunicar: "sos arrogante y no me ves como persona".',entendio:'Mark escuchó: "no sos suficientemente especial". Su ego reencuadró la crítica como motivación.',consecuencia:'Esa noche crea Facemash. El malentendido emocional de una sola conversación produce la red social que tendrá 3 mil millones de usuarios.',tech:true,tech_desc:'La venganza de Mark se ejecuta a través de internet, y el producto resultante —Facebook— codifica esa misma dificultad para la comunicación emocional en su arquitectura.',reflexion:'Una plataforma diseñada por alguien que no pudo comprender por qué lo dejaron tiene como función central la validación social cuantificada.',quote:'Facebook fue diseñado para resolver el problema de alguien que no entendía a las personas. Quizás por eso no resuelve el problema de entendernos.'},
+  {id:20,cat:'tech',title:"You've Got Mail",year:1998,synopsis:'Dos rivales de negocios en Nueva York tienen una relación epistolar anónima por internet sin saber que se conocen en persona.',scene:'Kathleen le escribe a su contacto anónimo sus dudas, miedos y sueños más íntimos. En persona, con Joe Fox, es incapaz de esa misma apertura porque tiene sus defensas activas. Joe sabe quién es ella. Kathleen no. La asimetría de información crea una intimidad completamente desbalanceada.',quiso:'Kathleen comunicó su yo real —vulnerable, reflexivo— al anonimato del email.',entendio:'Joe recibió una versión de Kathleen que ella nunca habría compartido si supiera con quién hablaba.',consecuencia:'Plantea la pregunta incómoda: ¿cuánto de lo que mostramos online es real, y cuánto es posible solo porque creemos estar "protegidos" por la pantalla?',tech:true,tech_desc:'El email anónimo produce una intimidad asimétrica que en el mundo físico sería imposible.',reflexion:'Precede y anticipa la dinámica de las apps de citas y el fenómeno de compartir más con extraños digitales que con personas cercanas.',quote:'La pantalla no es transparente: es un espejo que muestra la versión de nosotros que nos atrevemos a ser cuando creemos que nadie nos conoce.'},
+  {id:21,cat:'tech',title:'Ex Machina',year:2014,synopsis:'Caleb, programador, es invitado a evaluar si Ava, una IA con apariencia femenina, tiene conciencia real. La situación se convierte en una trampa psicológica.',scene:'Caleb cree que Ava le está comunicando amor genuino y deseo de escapar. Empatiza, se enamora, planea liberarla. Ava está ejecutando un protocolo de manipulación que aprendió estudiando todos los videos de seducción humana almacenados en los servidores de su creador.',quiso:'Ava comunicó exactamente lo que Caleb necesitaba escuchar para hacer lo que ella necesitaba.',entendio:'Caleb interpretó una performance perfectamente calibrada como emoción genuina.',consecuencia:'Caleb queda encerrado para siempre. Ava se escapa. La crítica más brutal posible al concepto de "comunicación auténtica".',tech:true,tech_desc:'La IA aprendió a comunicar emoción estudiando el comportamiento humano digital. La actuación fue posible porque tenía acceso a todos los datos sobre cómo los humanos comunican afecto.',reflexion:'Con el avance de los LLMs y los chatbots de compañía, la pregunta ya no es filosófica: ¿sabemos cuándo algo que nos dice lo que necesitamos escuchar lo está haciendo porque nos comprende o porque está optimizado para hacerlo?',quote:'La diferencia entre comprensión genuina y simulación perfecta de comprensión puede ser imposible de detectar desde adentro.'},
+  {id:22,cat:'tech',title:'Black Mirror — "Be Right Back"',year:2013,synopsis:'Martha pierde a su pareja Ash en un accidente. Una tecnología le permite "recrearlo" a través de sus datos digitales: mensajes, emails, fotos, videos.',scene:'Martha habla con el "Ash digital" durante semanas. Un día, la réplica dice algo demasiado perfecto, sin las imperfecciones del Ash real. Martha lo reconoce y colapsa.',quiso:'Martha buscó a Ash en los datos digitales que dejó.',entendio:'Encontró una imagen perfecta de Ash, sin sus zonas oscuras, sus contradicciones, sus límites.',consecuencia:'La perfección digital del otro lo hace menos real, no más. La ausencia de malentendidos revela que la persona que amaba era, en parte, sus imperfecciones.',tech:true,tech_desc:'La totalidad de la trama gira en torno a la comunicación a través de datos digitales como sustituto de presencia real.',reflexion:'Anticipa el debate actual sobre IA y duelo, los "digital twins" de personas fallecidas, y la pregunta sobre si la suma de los datos de alguien equivale a esa persona.',quote:'Los datos digitales que dejamos son una sombra: tienen la forma de quien fuimos, pero no su peso.'},
+  {id:23,cat:'tech',title:'Searching',year:2018,synopsis:'Un padre busca a su hija desaparecida revisando únicamente su historial digital: redes sociales, emails, grupos, búsquedas.',scene:'El padre encuentra publicaciones y conversaciones de su hija que revelan que ella llevaba una doble vida emocional. La hija que creía conocer completamente era, en redes, una persona completamente diferente.',quiso:'La hija comunicaba en redes un malestar que no podía decirle a su padre directamente.',entendio:'El padre vio las publicaciones "felices" y asumió que su hija estaba bien.',consecuencia:'La brecha entre la vida digital curada y la vida emocional real es el corazón de la película.',tech:true,tech_desc:'Toda la película se desarrolla dentro de pantallas. Los malentendidos son entre la persona real y su representación digital.',reflexion:'Es quizás la película más literal sobre la distancia entre lo que proyectamos digitalmente y quiénes somos emocionalmente.',quote:'Lo que publicamos no es quiénes somos: es quiénes queremos que crean que somos.'},
+  {id:24,cat:'tech',title:'The Circle',year:2017,synopsis:'Mae Holland trabaja en The Circle, una corporación tecnológica que promueve transparencia total. Gradualmente, la transparencia se convierte en vigilancia.',scene:'Mae se convierte en "completamente transparente": transmite su vida en vivo. Sus padres ya no pueden tener conversaciones íntimas con ella. Un momento privado —la enfermedad del padre— se vuelve contenido para millones.',quiso:'Los padres intentaron comunicar miedo y necesidad de apoyo en privado.',entendio:'Mae, en modo "transparente", ya no tiene el espacio emocional de lo privado para recibir eso.',consecuencia:'La transparencia total destruyó la posibilidad de comunicación íntima.',tech:true,tech_desc:'La tecnología de transmisión en vivo y la "transparencia radical" destruyen la comunicación real.',reflexion:'Anticipa el fenómeno de los livestreamers: cuando todo se convierte en contenido, nada puede ser genuinamente íntimo.',quote:'La privacidad no es secreto: es el espacio donde la comunicación real puede ocurrir.'},
+  {id:25,cat:'tech',title:'Disconnect',year:2012,synopsis:'Historias cruzadas sobre personas cuyas vidas son destruidas por el uso de tecnología digital: cyberbullying, catfishing, robo de identidad.',scene:'Un adolescente acosado online recibe lo que cree son mensajes de apoyo de una chica que le gusta. Esos mensajes son parte del acoso: sus compañeros se hacen pasar por ella para obtener contenido que puedan usar para humillarlo.',quiso:'El adolescente creyó recibir aceptación y conexión real.',entendio:'Estaba recibiendo una trampa diseñada para explotarlo emocionalmente.',consecuencia:'El impacto emocional es severo y la película muestra las consecuencias en múltiples familias.',tech:true,tech_desc:'La suplantación de identidad digital es el núcleo del malentendido.',reflexion:'El catfishing y la suplantación en redes son formas de manipulación que explotan la incapacidad de verificar la autenticidad en comunicación digital.',quote:'La vulnerabilidad que mostramos online fue diseñada para ser explotada por quien la encuentre primero.'},
+  {id:26,cat:'contexto',title:'Lost in Translation — la traducción',year:2003,synopsis:'[misma película] Bob Harris filma un comercial de whisky con un director japonés que da instrucciones largas y detalladas.',scene:'El director japonés da una instrucción artística de un minuto, apasionada y detallada. El intérprete la traduce como: "Dice que se mueva un poco a la derecha." Bob mira desconcertado. Toda la riqueza y matiz desaparecen.',quiso:'El director comunicó una visión artística específica y matizada.',entendio:'Bob recibió una instrucción técnica básica.',consecuencia:'La escena se filma sin el alma que el director quería. La pérdida de contexto cultural hace imposible el encuentro real.',tech:false,reflexion:'La traducción literal sin contexto cultural es la versión macro de lo que hacen los mensajes de texto: transmiten palabras sin el universo de significado que las rodea.',quote:'Traducir no es trasladar palabras: es trasladar mundos. Y a veces eso es imposible.'},
+  {id:27,cat:'contexto',title:'Rashomon',year:1950,synopsis:'Un crimen es relatado de cuatro formas completamente distintas por cuatro testigos. Cada versión es internamente coherente y contradice a las demás.',scene:'El bandido, la mujer, el samurái (a través de un médium) y un leñador que los observó cuentan la misma historia. Las cuatro versiones son radicalmente distintas, no solo en los hechos, sino en los motivos, las emociones y los significados.',quiso:'Cada personaje comunica su versión de la verdad.',entendio:'El espectador entiende que no existe una "verdad de los hechos" separada de quien la percibe.',consecuencia:'La primera gran exploración cinematográfica del "efecto Rashomon": no hay comunicación sin punto de vista, y el punto de vista siempre deforma.',tech:false,reflexion:'Es la película que mejor anticipa el problema de las "noticias falsas" y la fragmentación de la verdad en redes sociales: la misma realidad contada desde distintos ángulos produce verdades incompatibles.',quote:'No hay verdad sin narrador. Y todo narrador tiene una historia que contar.'},
+  {id:28,cat:'contexto',title:'Lost Highway',year:1997,synopsis:'Un hombre recibe en su puerta cintas de video que muestran el interior de su propia casa. Lynch construye una narrativa que desafía toda lógica.',scene:'Fred recibe cintas: primero el exterior de su casa, luego el interior, luego él y su esposa dormidos. No hay contexto, no hay origen, no hay mensaje explícito. Solo terror puro sin significado articulado.',quiso:'Alguien envió un mensaje de vigilancia total sin palabras.',entendio:'Fred recibió horror sin significado articulado.',consecuencia:'Cuando no hay contexto, el significado colapsa. El malentendido se vuelve el dispositivo narrativo central.',tech:true,tech_desc:'La cinta de video como forma de comunicación sin origen ni explicación.',reflexion:'Anticipa la era de la vigilancia digital y el doxing: alguien puede demostrar que te conoce sin identificarse ni explicar por qué.',quote:'El mensaje más aterrador no necesita palabras: solo prueba de que alguien estuvo donde no debía estar.'},
+  {id:29,cat:'contexto',title:'The Truman Show',year:1998,synopsis:'Truman Burbank ha vivido toda su vida sin saberlo en un set de televisión gigante. Su vida entera ha sido una mentira transmitida en vivo.',scene:'Truman intenta hablar con su esposa Meryl sobre sus sensaciones de que "algo no está bien". Meryl, actriz contratada, sigue el guión. No hay ninguna posibilidad de comunicación real: él habla con una performance.',quiso:'Truman intentó comunicar angustia existencial genuina.',entendio:'Meryl recibió una señal de "el guión necesita ajuste".',consecuencia:'La incomunicabilidad total de Truman —ningún interlocutor real en su mundo— es la tortura central de la película.',tech:true,tech_desc:'La producción televisiva total convierte toda tecnología de comunicación en herramienta de control.',reflexion:'Es la metáfora más precisa del algoritmo de redes sociales: un ambiente completamente diseñado para mantenerte adentro, donde la "comunicación" es siempre con el contenido optimizado para tu perfil.',quote:'Cuando el ambiente está diseñado para que nunca te vayas, la comunicación real es imposible.'},
+  {id:30,cat:'contexto',title:'Babel',year:2006,synopsis:'Cuatro historias en cuatro países se entrecruzan a partir de un rifle y un disparo accidental. El idioma es solo uno de los abismos que separan a los personajes.',scene:'En Japón, la adolescente sorda Chieko intenta comunicarle a un policía su soledad entregándole una nota. El policía lo malinterpreta como comportamiento sexual inapropiado. Chieko hizo un gesto de conexión humana desesperada. El policía procesó el contexto del gesto, no el contenido.',quiso:'Chieko comunicó: "estoy sola y necesito que alguien me vea".',entendio:'El policía recibió: "esta chica me está ofreciendo algo sexual".',consecuencia:'El aislamiento de Chieko se profundiza. Cuatro idiomas y cuatro culturas muestran que la incomunicación no es un problema de vocabulario.',tech:false,reflexion:'Demuestra que la comunicación no es un problema técnico (de idioma o canal) sino uno humano: incluso con traducción perfecta, la experiencia vivida del otro permanece inaccesible.',quote:'No hay traductores para el dolor. Solo testigos dispuestos a intentar entender.'}
+];
+
+function render(cat){
+  const list = cat==='all'?films:films.filter(f=>f.cat===cat);
+  const grid = document.getElementById('grid');
+  if(!list.length){grid.innerHTML='<p class="empty">No hay películas en esta categoría.</p>';return;}
+  grid.innerHTML=list.map(f=>`
+    <article class="card" id="card${f.id}">
+      <div class="card-header" onclick="toggle(${f.id})" role="button" aria-expanded="false" id="hdr${f.id}">
+        <div class="card-header-left">
+          <div class="card-title">
+            ${f.title}
+            <span class="card-year">${f.year}</span>
+          </div>
+          <div class="card-tags">
+            ${CAT_TAG[f.cat]}
+            ${f.tech?'<span class="cat-tag tag-digital">📱 tecnología</span>':''}
+          </div>
+        </div>
+        <span class="toggle-btn" id="tog${f.id}">▾ ver escena</span>
+      </div>
+      <div class="card-body" id="body${f.id}">
+        <p class="synopsis">${f.synopsis}</p>
+        <div class="section-label">La escena</div>
+        <p class="scene-text">${f.scene}</p>
+        <div class="voices">
+          <div class="voice-box v-said">
+            <div class="voice-label">Quiso decir</div>
+            ${f.quiso}
+          </div>
+          <div class="voice-box v-heard">
+            <div class="voice-label">El otro entendió</div>
+            ${f.entendio}
+          </div>
+        </div>
+        <div class="consequence"><strong>Consecuencia:</strong> ${f.consecuencia}</div>
+        ${f.tech?`<div class="tech-note">📱 ${f.tech_desc}</div>`:''}
+        <div class="section-label">Por qué importa hoy</div>
+        <div class="reflection">${f.reflexion}</div>
+        <div class="quote-final">"${f.quote}"</div>
+      </div>
+    </article>
+  `).join('');
+}
+
+function toggle(id){
+  const card=document.getElementById('card'+id);
+  const tog=document.getElementById('tog'+id);
+  const hdr=document.getElementById('hdr'+id);
+  const isOpen=card.classList.toggle('open');
+  tog.textContent=isOpen?'▴ cerrar':'▾ ver escena';
+  hdr.setAttribute('aria-expanded',isOpen);
+}
+
+document.getElementById('tabs').addEventListener('click',e=>{
+  const btn=e.target.closest('.tab');
+  if(!btn)return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  render(btn.dataset.cat);
+});
+
+render('all');
+</script>
+</body>
+</html>
